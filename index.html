@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurations Docker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow: auto;
+            border-radius: 5px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+        h1{
+            color: #fff;
+        }
+        .h1{
+            color: black;
+          }
+        h2 {
+            margin-top: 40px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        header,footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+     .right img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 8px solid #bdbdbd;
+    object-fit: cover;
+    margin-top: 70px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #e0e0e0;
+    border: 1px solid #bdbdbd;
+    padding: 4px 15px;
+    border-radius: 14px;
+    font-size: 13px;
+    color: #4CAF50;
+    font-size: 9px;
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.blurred {
+    filter: blur(3px);
+    color: inherit; /* Conserve la couleur du texte pour qu'il reste visible sous le flou */
+}
+
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Guide de Configuration Docker</h1>
+    <p>Votre guide complet pour installer et administrer Docker</p>
+
+</header>
+
+<main>
+    <div class="right">
+        <img src="profile.jpg" alt="Profile Picture">
+    </div>
+    <h1 class="h1">Configurations Docker sur Debian12</h1>
+    <p>
+        Docker permet la mise en œuvre de conteneurs s'exécutant en isolation, via une API de haut-niveau.
+        Construit sur des capacités du noyau Linux (surtout les cgroups et espaces de nommage), un
+        conteneur Docker, à l'opposé de machines virtuelles traditionnelles, ne requiert aucun système
+        d'exploitation séparé et n'en fournit aucun. Il s'appuie plutôt sur les fonctionnalités du noyau et
+        utilise l'isolation de ressources (comme le processeur, la mémoire, les entrées et sorties et les
+        connexions réseau) ainsi que des espaces de noms séparés pour isoler le système d'exploitation tel
+        que vu par l'application. Docker accède aux capacités de virtualisation du noyau Linux, soit
+        directement à travers la bibliothèque runc (disponible depuis Docker 0.9), soit indirectement via
+        libvirt, LXC (Linux Containers) ou systemd-nspawn.
+    </p>
+    <h2>Installation de Docker</h2>
+    <pre>
+apt-get update
+apt-get upgrade
+apt -y install docker.io
+        </pre>
+
+    <h2>Administration de Docker</h2>
+
+    <h3>Rechercher une image Debian dans Docker Hub</h3>
+    <pre>docker search debian</pre>
+    <img src="search.png" alt="Image Docker" class="img">
+    <h3>Télécharger l'image</h3>
+    <pre>
+docker pull debian
+        </pre>
+    <img src="m1.png" alt="DHCP Status" class="img">
+
+    <h3>Lister les images Docker</h3>
+    <pre>
+docker images -a
+        </pre>
+    <img src="m2.png" alt="DHCP Status" class="img">
+    <h3>Supprimer une image Docker</h3>
+    <pre>
+docker rmi Image_id
+        </pre>
+    <img src="m3.png" alt="DHCP Status" class="img">
+
+    <h2>Conteneurs Docker</h2>
+    <p>
+Un conteneur est un processus ou un ensemble de processus isolés du reste du système, tout en étant légers.
+Le conteneur permet de faire de la virtualisation légère, c'est-à-dire qu'il ne virtualise pas les ressources, il ne crée qu'une isolation des processus. Le conteneur partage donc les ressources avec le système hôte.
+        </p>
+
+    <h3>Afficher les conteneurs en cours d'exécution</h3>
+    <pre>
+docker ps
+        </pre>
+    <img src="m4.png" alt="DHCP Status" class="img">
+
+    <h3>Créer et lancer un conteneur</h3>
+    <pre>
+docker run -it --name nomConteneur nomImage
+        </pre>
+    <img src="m5.png" alt="DHCP Status" class="img">
+    <p>Une fois que le conteneur est créé, vous êtes automatiquement connecté à une session interactive du conteneur grâce aux options -i et -t.
+
+        Pour quitter la session interactive du conteneur tout en laissant le conteneur fonctionner en arrière-plan, appuyez sur les touches [Ctrl+p] puis [Ctrl+q].</p>
+    <h3>Affichons à nouveau la liste des conteneurs en cours d’exécution</h3>
+    <pre>
+docker ps
+        </pre>
+    <img src="m6.png" alt="DHCP Status" class="img">
+
+    <h3>Inspecter un conteneur</h3>
+    <pre>
+docker inspect nomConteneur
+        </pre>
+    <img src="m7.png" alt="DHCP Status" class="img">
+
+    <h3>Supprimer un conteneur</h3>
+    <pre>
+docker rm -f nomConteneur
+        </pre>
+
+    <h3>Supprimer tous les conteneurs</h3>
+    <pre>
+docker rm -f $(docker ps -aq)
+        </pre>
+
+    <h2>La Sauvegarde</h2>
+    <p>
+        Par défaut, le stockage des machines docker est volatile. C’est-à-dire dès que nous arrêtons le
+        conteneur, tout le travail fait à l’intérieur sera perdu. Dans cette partie, nous allons apprendre
+        à sauvegarder le travail fait sur un conteneur dans un espace spécifique.
+    </p>
+    <h3>Sauvegarde en local</h3>
+    <p>
+        Pour sauvegarder nos conteneurs, nous avons plusieurs méthodes, des méthodes de
+        sauvegarde locales et celles qui consistent à faire des sauvegardes en ligne (sur le docker hub) en
+        privé ou en public. Pour sauvegarder un conteneur, il faut tout d’abord que le processus existe.
+        C’est-à-dire, il faut que le conteneur soit lancé.
+        La sauvegarde se fait comme suit :
+    </p>
+    <pre>
+docker commit id_conteneur nom_sauvegarde
+        </pre>
+    <img src="m8.png" alt="Image" class="img">
+    <p>
+        Dès que nous lançons la sauvegarde, le conteneur sera vu par le système comme une image.
+        Voici d’ailleurs la preuve de ce que nous avançons :
+    </p>
+    <img src="m9.png" alt="Image" class="img">
+    <p>
+        Puisqu’un conteneur est démarré à partir d’une image, donc à ce stade, il est possible de
+        démarrer un conteneur avec la sauvegarde que nous venons de faire.
+    </p>
+    <h3>Exporter l’image</h3>
+    <p>
+        Nous pouvons même exporter la sauvegarde dans un fichier tar (une archive), afin de pouvoir
+        la lancer sur une autre machine par exemple. Nous allons exporter notre image sauvegardée
+        dans un fichier tar.
+    </p>
+    <pre>
+docker save nom_sauvegarde > nom_sauvegarde.tar
+        </pre>
+    <img src="m10.png" alt="Image" class="img">
+    <img src="m11.png" alt="Image" class="img">
+    <p>
+        À ce stade tout le travail effectué sur le conteneur a été sauvegardé dans ce fichier, donc rien
+        ne sera perdu dorénavant !
+    </p>
+    <h3>Sauvegarde en ligne</h3>
+    <p>
+        Ah oui, il est possible de sauvegarder une image en ligne, et cela va accroître la portabilité
+        de celle-ci car nous pourrons la télécharger depuis n’importe quelle machine. Pour réaliser
+        cela, il faut tout d’abord disposer d’un compte docker. Pour créer un compte docker, il faudra
+        cliquer ici Après création du compte, il faut tout d’abord réaliser la tâche précédente (celle de
+        la sauvegarde en local).
+        <br>
+        <strong>Authentification</strong>
+        <br>
+        Cette étape est vraiment cruciale car c’est à ce niveau qu’il faut permettre à notre machine de se
+        connecter à notre compte en ligne.
+    </p>
+    <pre>
+docker login
+        </pre>
+    <img src="m12.png" alt="Image" class="img">
+    <p>
+        À partir de ce moment, cette machine peut accéder au compte docker de <em>illo927</em> et y stocker
+        des images.
+    </p>
+    <h3>Créer un tag pour notre image à exporter</h3>
+    <p>
+        Le nom de l’image respecte une convention de nommage. Cette convention de nommage veut
+        que si notre image n’est pas officielle, il faut mettre votre ID (votre login Docker Hub) au début
+        de l’image suivi d'un slash (/) ensuite suivi du nom propre que vous donnez à l’image (suivant
+        son contenu).
+        <br>
+        Donc après s’être connecté, mon ID docker étant <em class="text blurred">illo927</em>, je tape la commande suivante :
+    </p>
+    <pre>
+docker tag id_image id_docker/nom_sauvegarde
+        </pre>
+    <img src="m13.png" alt="Image" class="img">
+    <p>
+        Pour réellement envoyer l’image en ligne, il faut faire ceci :
+    </p>
+    <pre>
+docker push id_docker/nom_sauvegarde
+        </pre>
+    <img src="m14.png" alt="Image" class="img">
+    <p>
+        Notre image vient d’être uploadée !
+        Voici la preuve qui montre que notre conteneur est vraiment en ligne :
+    </p>
+    <img src="m15.png" alt="Image" class="img">
+    <h3> La restauration </h3>
+    <p>La restauration d’une image docker n’est rien d’autre que démarrer un conteneur à partir d’une
+        sauvegarde déjà faite ! </p>
+    <h3>Restauration à partir de l’image</h3>
+    <p>Nous allons lancer un nouvel conteneur auquel nous allons associé la sauvegarde</p>
+    <pre>docker run -it --name nouveaunom nomsauvegarde bash</pre>
+    <img src="m16.png" alt="Image" class="img">
+    <h3> Restauration à partir du fichier tar</h3>
+    <p>Pour restaurer un conteneur en local, il suffit d’utiliser la commande docker load et de lui
+        indiquer en paramètre le chemin d’accès à notre fichier de sauvegarde. </p>
+    <pre>docker run -it --name nouveau illo_sauvegarde.tar</pre>
+    <img src="m17.png" alt="Image" class="img">
+    <p>Supposé que la sauvegarde soit faite sur une autre machine et que je récupère cette version
+        archivée de la sauvegarde, dès que je tape la commande ci-dessus, j’aurai automatiquement
+        cette sauvegarde dans ma liste d’images en local !</p>
+    <h3>Restauration depuis un conteneur en ligne</h3>
+    <p>Pour restaurer une image que nous avons sauvegardée sur le hub en ligne il suffit d’utiliser la
+        commande classique docker pull pour rapatrier l’image en local comme pour n’importe qu’elle
+        image hébergée sur le docker Hub .
+        Pour montrer que notre conteneur est vraiment en ligne, téléchargeons-le à partir d’une
+        machine tierce.</p>
+    <pre>docker pull <em class="text blurred"> illo927</em>/illo_sauvegarde1</pre>
+    <img src="m18.png" alt="Image" class="img">
+    <h3>Vérification</h3>
+    <pre>docker images</pre>
+    <img src="m19.png" alt="Image" class="img">
+   <h3>La Gestion du réseau avec Docker </h3>
+    <p>Les conteneurs Dockers étant cloisonnés dans des Hôtes physiques ou virtuels, nous avons
+        l’impression qu’il est donc impossible d’interagir avec eux à travers le réseau. Cela n’est qu’une
+        illusion. Dans cette partie, nous allons présenter le mode de fonctionnement du système
+        réseau des conteneurs Dockers avec pratique à l’appui .</p>
+    <h3> Le Driver bridge</h3>
+    <p>Tout d'abord, lorsque vous installez Docker pour la première fois, il crée automatiquement un
+        réseau bridge nommé bridge connecté à l'interface réseau docker0 ( consultable avec la
+        commande ip addr show docker0 ). Chaque nouveau conteneur Docker est automatiquement
+        connecté à ce réseau, sauf si un réseau personnalisé est spécifié. Par ailleurs, le réseau bridge
+        est le type de réseau le plus couramment utilisé. Il est limité aux conteneurs d'un hôte unique
+        exécutant le moteur Docker. Les conteneurs qui utilisent ce driver, ne peuvent communiquer
+        qu'entre eux, cependant ils ne sont pas accessibles depuis l'extérieur. Voici l’interface de
+        docker qui constitue la passerelle par défaut des conteneurs </p>
+    <pre>ip addr sh docker0</pre>
+    <img src="m20.png" alt="image" class="img">
+    <h3>Mise en œuvre</h3>
+    <p>Lançons deux conteneurs </p>
+    <pre>docker run -it --name machine1 <em class="text blurred"> illo927</em>/illo_sauvegarde1
+    </pre>
+    <p><strong>À chaque première connexion sur l'interface interactive d'un conteneur Docker, il faut mettre à jour les paquets pour bénéficier des dernières versions et correctifs de sécurité</strong></p>
+    <pre>apt update</pre>
+    <pre>hostname -I</pre>
+    <img src="m21.png" alt="Image" class="img">
+    <p>le second conteneur</p>
+    <pre>docker run -it --name machine2 <em class="text blurred"> illo927</em>/illo_sauvegarde1</pre>
+    <pre>hostname -I</pre>
+    <img src="m22.png" alt="Image" class="img">
+    <img src="m23.png" alt="Image" class="img">
+    <p>Nous constatons que c’est du NAT qui agit
+    </p>
+    <pre>route -n</pre>
+    <img src="m24.png" alt="Image" class="img">
+    <p>Il est le réseau couramment utilisé et les conteneurs utilisant ce driver peuvent communiquer entre
+        eux, cependant ils ne sont pas accessibles depuis l’extérieur.
+        L’alternative permettant aux conteneurs du réseau bridge de communiquer ou d’être accessibles au
+        monde extérieur consiste à configurer le mappage des ports.
+    </p>
+    <h3>Le Driver host</h3>
+    <p>Ce type de réseau permet aux conteneurs d'utiliser la même interface que l'hôte. Il supprime
+        donc l'isolation réseau entre les conteneurs et seront par défaut accessibles de l'extérieur. De
+        ce fait, il prendra la même IP que votre machine hôte.
+        Voici les informations de la machine hôte</p>
+    <pre>docker run --rm --network host -it --name nom_reseau nomconteneur bash</pre>
+    <img src="m25.png" alt="Image" class="img">
+    <pre>ifconfig nominterface</pre>
+    <img src="m26.png" alt="Image" class="img">
+    <pre>exit</pre>
+    <p>Voici les informations de la machine hôte</p>
+    <img src="m27.png" alt="Image" class="img">
+    <p>C’est la même adresse IP ! </p>
+    <h3>Le Driver overlay</h3>
+    <p>Si vous souhaitez une mise en réseau multi-hôte native, vous devez utiliser un driver overlay. Il
+        crée un réseau distribué entre plusieurs hôtes possédant le moteur Docker. Docker gère de
+        manière transparente le routage de chaque paquet vers et depuis le bon hôte et le bon
+        conteneur. En termes claires, cette configuration nous permet de mettre dans le même réseau
+        des conteneurs dockers lancés sur des machines différentes !</p>
+    <h3>Mise en œuvre </h3>
+    <p>Nous allons lancer deux conteneurs sur deux machines différentes : </p>
+    <pre>docker swarm init --advertise-addr adresseserver</pre>
+    <img src="m28.png" alt="Image" class="img">
+    <p>L’information colorée contient le jeton qui sera envoyé au niveau des différentes machines afin
+        que les conteneurs soient intégrés dans le réseau. </p>
+
+    <h3>Créer un réseau Overlay </h3>
+    <pre>docker network create --driver=overlay --attachable reseau-overlay</pre>
+    <img src="m29.png" alt="Image" class="img">
+    <h3>Lancer un conteneur dans le réseau </h3>
+    <pre>docker run -it --name machine3 --network reseau-overlay debian bash</pre>
+    <img src="m30.png" alt="Image" class="img">
+    <pre>hostname -I</pre>
+    <img src="m32.png" alt="Image" class="img">
+    <p>Nous voyons clairement que le conteneur a obtenu deux adresses IP. Mais celle qui nous
+        intéresse est 10.0.1.2 car le conteneur qui sera lancé sur l’autre machine physique sera dans le
+        même réseau ! </p>
+    <h3>Envoie du Token </h3>
+    <p>Sur la machine physique, Créer un fichier dans lequel mettre le token qui avait été généré et
+        l’envoyer à l’autre machine physique.
+        Sur la machine 2 Nous allons joindre la machine 2 au réseau grâce au jeton reçu !</p>
+    <pre> docker swarm join --token SWMTKN-1-1pvf1lj22rt79easdmspmvofjzq4kdh4i7yq810w2g4v635egv-0efqi7njvpk6a91dupuk2pea9 192.168.100.1:2377
+</pre>
+    <img src="m33.png" alt="Image" class="img">
+    <p>Lister les différents réseau et voir ce qui se passe :</p>
+    <pre>sudo docker network ls</pre>
+    <img src="m34.png" alt="Image" class="img">
+    <p>Notre Driver Overlay a bien été créé ! </p>
+    <h3> Connecter un conteneur de la machine 4 au réseau
+    </h3>
+    <pre>sudo docker run -it --name machine4 --network reseau-overlay debian bash</pre>
+    <img src="m35.png" alt="Image" class="img">
+    <pre>hostname -I</pre>
+    <p>Test de connectivité</p>
+    <pre>ping -c4 machine4</pre>
+    <img src="m36.png" alt="Image" class="img">
+    <p>ça marche comme sur des roulettes ! <br>
+        Pour quitter le réseau, il faut faire ceci "depuis le serveur principal" : </p>
+    <pre>docker network rm reseau-overlay</pre>
+    <img src="m37.png" alt="Image" class="img">
+    <h3>Portainer</h3>
+    <p>Portainer est un outil open source de gestion d'applications conteneurisées. Il
+        fonctionne avec Kubernetes, Docker, Docker Swarm, Azure ACI dans les deux centres
+        de données et à la périphérie. Portainer supprime la complexité associée aux
+        orchestrateurs afin que tout le monde puisse gérer les conteneurs. Il peut être utilisé
+        pour déployer et gérer des applications, observer le comportement des conteneurs et
+        fournir la sécurité et la gouvernance nécessaires pour déployer largement les
+        conteneurs. Portainer CE (open source) est approuvé par plus de 500 000 utilisateurs
+        dans le monde. Portainer Business s'appuie sur la fondation open source et permet
+        aux organisations d'exécuter des applications conteneurisées à grande échelle sans
+        avoir besoin d'embaucher de nouvelles personnes ou de requalifier les équipes
+        existantes. </p>
+    <h3>Mise en place de portainer</h3>
+<p>déploiement du serveur</p>
+    <p>◆ Commençons par créer un volume </p>
+    <pre>docker volume create portainer_data</pre>
+    <img src="m38.png" alt="Image" class="img">
+    <pre>docker volume ls</pre>
+    <img src="m39.png" alt="Image" class="img">
+    <p>◆ Nous allons lancer le conteneur en arrière plan en précisant le port à utiliser et le fichier d’accueil
+        des données .</p>
+    <pre>docker run -d -p 8000:8000 -p 9000:9000 --name=portainer restart=always -v /var/run/docker.sock -v portainer_data:/data portainer/portainer.ce</pre>
+    <img src="m40.png" alt="Image" class="img">
+    <p>Note : Le port 8000 est celui du deamon, le 9000 est le port du client ! En claire</p>
+    <pre>docker image ls</pre>
+    <img src="m41.png" alt="Image" class="img">
+<p>Nous pouvons vérifier les processus qui tournent sur les ports 8000 et 9000 </p>
+    <pre>netstat -anp | grep -w 8000</pre>
+    <img src="m42.png" alt="Image" class="img">
+    <p>Nous allons accéder à l’interface de Portainer comme suit <br>
+        IP:le_port_définit <br>
+        Pour une première connexion, il faudra donner un mot de passe au compte admin par défaut
+    </p>
+    <pre>http://192.168.100.1:9000</pre>
+    <img src="m43.png" alt="Image" class="img">
+    <p>Après création de l’utilisateur et authentification, nous aurons une interface comme celle-ci : </p>
+    <img src="m44.png" alt="Image" class="img">
+    <img src="m45.png" alt="Image" class="img">
+    <p>Lorsque nous cliquons sur conteneur qui est affiché, nous aurons un tableau de bord très intéressant
+        qui nous affiche beaucoup d’informations </p>
+    <img src="m46.png" alt="Image" class="img">
+    <p>Affichons par exemple la liste de nos images </p>
+    <img src="m47.png" alt="Image" class="img">
+    <p>◆ Lançons un nouveau conteneur </p>
+    <p>Cliquer sur Ajouter un conteneur et mettre des informations comme le nom du conteneur et l’image
+        qui sera utilisée.</p>
+    <img src="m48.png" alt="Image" class="img">
+    <p>Au niveau de la console, nous avons plusieurs choix (Cette partie est très importante, car c‘est elle qui
+        définie la politique de démarrage du conteneur) </p>
+    <img src="m49.png" alt="Image" class="img">
+    <p>Pour valider la création du conteneur, il faudra dérouler la barre pour cliquer sur Déployer un conteneur
+        comme sur la figure ci-dessous : </p>
+    <img src="m50.png" alt="Image" class="img">
+    <p>Nous aurons la liste des conteneurs </p>
+    <img src="m51.png" alt="Image" class="img">
+    <p>Nous voyons clairement que notre conteneur a été créé ! </p>
+
+    <pre>docker ps</pre>
+    <img src="m52.png" alt="Image" class="img">
+    <p>Nous pouvons accéder à la console de notre conteneur en cliquant sur l’icône de console qui se trouve
+        devant le nom du conteneur pour avoir l’interface suivante :
+    </p>
+    <img src="m53.png" alt="Image" class="img">
+    <p>Cliquer sur Connect </p>
+    <img src="m54.png" alt="Image" class="img">
+    <p>Voilà nous pouvons tout faire ici !Lançons un conteneur en ligne de commande en mode interactif </p>
+    <p>Comme nous l’avons constaté, nous pouvons faire énormément de choses avec cet
+        outil ! </p>
+</main>
+
+<footer>
+    <p>&copy; 2024 Guide Docker. Tous droits réservés.</p>
+    <p>Contact: <a href="mailto:support@guidedocker.com" style="color: #fff;">support@guidedocker.com</a></p>
+</footer>
+
+</body>
+
+</html>

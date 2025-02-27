@@ -39,15 +39,11 @@ header .logo a{
             border-radius: 5px;
         }
 
-        h2, h3 {
+       h1, h2, h3 {
             color: #333;
         }
-        h1{
-            color: #fff;
-        }
-        .h1{
-            color: black;
-          }
+       
+      
         h2 {
             margin-top: 40px;
             border-bottom: 2px solid #ddd;

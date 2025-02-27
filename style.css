@@ -40,7 +40,7 @@ header .logo a{
         }
 
        h1, h2, h3 {
-            color: #fff;
+            color: white;
         }
        .h1 {
                color:black;
@@ -67,11 +67,12 @@ header .logo a{
 
         p {
             margin-bottom: 20px;
+                color: #ffffff;
         }
 
         header,footer {
             background-color: #333;
-            color: #fff;
+            color: #ffffff;
             padding: 10px 20px;
             text-align: center;
         }

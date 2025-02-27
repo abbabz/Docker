@@ -45,7 +45,7 @@ pre {
     border: 1px solid #ddd;
     overflow: auto;
     border-radius: 5px;
-    color: #333; /* Texte dans le préformaté */
+    color: #333; /* Texte dans le préformaté : couleur foncée */
 }
 
 /* Titres */
@@ -79,7 +79,7 @@ h3 {
 /* Paragraphes */
 p {
     margin-bottom: 20px;
-    color: #ffffff;
+    color: #ffffff; /* Texte des paragraphes en blanc */
 }
 
 /* Header et Footer */
